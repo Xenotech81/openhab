@@ -22,6 +22,16 @@ props:
           label: Umbrechen
         - value: slider
           label: Horizontaler Scroll
+    - name: temp_format
+      label: Temperaturformat
+      type: TEXT
+      default: item
+      limitToOptions: true
+      options:
+        - value: item
+          label: Wie im Item formatiert
+        - value: integer
+          label: Ganzzahl (z.B. 12 °C)
     - name: current_label
       label: Text für "Aktuell"
       type: TEXT
@@ -156,7 +166,7 @@ slots:
         default:
           - component: Label
             config:
-              text: '=((props.current_label || "Aktuell") + ": ") + (@props.current_temp || "")'
+              text: '=((props.current_label || "Aktuell") + ": ") + (props.temp_format === "integer" ? Math.round(#props.current_temp) + " °C" : @props.current_temp || "")'
               style:
                 font-size: 16px
                 font-weight: 500
@@ -199,7 +209,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_today || "–") + " | " + (@props.temp_max_today || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_today) + " °C" : @props.temp_min_today || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_today) + " °C" : @props.temp_max_today || "–")'
           - component: f7-col
             config:
               style:
@@ -227,7 +237,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_tomorrow || "–") + " | " + (@props.temp_max_tomorrow || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_tomorrow) + " °C" : @props.temp_min_tomorrow || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_tomorrow) + " °C" : @props.temp_max_tomorrow || "–")'
           - component: f7-col
             config:
               style:
@@ -255,7 +265,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_day2 || "–") + " | " + (@props.temp_max_day2 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day2) + " °C" : @props.temp_min_day2 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day2) + " °C" : @props.temp_max_day2 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -284,7 +294,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_day3 || "–") + " | " + (@props.temp_max_day3 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day3) + " °C" : @props.temp_min_day3 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day3) + " °C" : @props.temp_max_day3 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -313,7 +323,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_day4 || "–") + " | " + (@props.temp_max_day4 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day4) + " °C" : @props.temp_min_day4 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day4) + " °C" : @props.temp_max_day4 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -342,7 +352,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_day5 || "–") + " | " + (@props.temp_max_day5 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day5) + " °C" : @props.temp_min_day5 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day5) + " °C" : @props.temp_max_day5 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -371,7 +381,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 11px, white-space: nowrap, width: '100%', text-align: center}
-                    text: '=(@props.temp_min_day6 || "–") + " | " + (@props.temp_max_day6 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day6) + " °C" : @props.temp_min_day6 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day6) + " °C" : @props.temp_max_day6 || "–")'
     - component: f7-row
       config:
         visible: '=props.forecast_layout === "slider"'
@@ -411,7 +421,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_today || "–") + " | " + (@props.temp_max_today || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_today) + " °C" : @props.temp_min_today || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_today) + " °C" : @props.temp_max_today || "–")'
           - component: f7-col
             config:
               style:
@@ -433,7 +443,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_tomorrow || "–") + " | " + (@props.temp_max_tomorrow || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_tomorrow) + " °C" : @props.temp_min_tomorrow || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_tomorrow) + " °C" : @props.temp_max_tomorrow || "–")'
           - component: f7-col
             config:
               style:
@@ -455,7 +465,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_day2 || "–") + " | " + (@props.temp_max_day2 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day2) + " °C" : @props.temp_min_day2 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day2) + " °C" : @props.temp_max_day2 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -478,7 +488,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_day3 || "–") + " | " + (@props.temp_max_day3 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day3) + " °C" : @props.temp_min_day3 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day3) + " °C" : @props.temp_max_day3 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -501,7 +511,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_day4 || "–") + " | " + (@props.temp_max_day4 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day4) + " °C" : @props.temp_min_day4 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day4) + " °C" : @props.temp_max_day4 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -524,7 +534,7 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_day5 || "–") + " | " + (@props.temp_max_day5 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day5) + " °C" : @props.temp_min_day5 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day5) + " °C" : @props.temp_max_day5 || "–")'
           - component: f7-col
             config:
               visible: '=props.extended_forecast'
@@ -547,4 +557,4 @@ slots:
                 - component: Label
                   config:
                     style: {fontSize: 12px, white-space: nowrap}
-                    text: '=(@props.temp_min_day6 || "–") + " | " + (@props.temp_max_day6 || "–")'
+                    text: '=(props.temp_format === "integer" ? Math.round(#props.temp_min_day6) + " °C" : @props.temp_min_day6 || "–") + " | " + (props.temp_format === "integer" ? Math.round(#props.temp_max_day6) + " °C" : @props.temp_max_day6 || "–")'
