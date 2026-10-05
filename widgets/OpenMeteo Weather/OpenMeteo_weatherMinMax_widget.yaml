@@ -16,6 +16,7 @@ props:
       label: Tagesdarstellung
       type: TEXT
       default: wrap
+      limitToOptions: true
       options:
         - value: wrap
           label: Umbrechen
